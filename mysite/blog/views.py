@@ -37,6 +37,7 @@ def post_share(request, post_id):
     })
 
 class PostListView(ListView):
+    model = Post
     context_object_name = 'posts'
     paginate_by = 3
     template_name = 'blog/post/list.html'
