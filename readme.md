@@ -80,4 +80,8 @@ A comprehensive Django blog application demonstrating core features, model manag
 - Working with environment variables
 - Rendering forms in templates
 
----
+
+### Creating a model for comments
+- Adding comments to the administration site
+- Creating forms from models
+---------------
