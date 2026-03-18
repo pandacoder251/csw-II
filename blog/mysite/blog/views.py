@@ -3,6 +3,8 @@ from .models import Post
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
 from .forms import EmailPostForm
+from django.views.generic import ListView 
+
 
 def post_share(request, post_id):
     post = get_object_or_404(
