@@ -84,4 +84,10 @@ A comprehensive Django blog application demonstrating core features, model manag
 ### Creating a model for comments
 - Adding comments to the administration site
 - Creating forms from models
----------------
+- Handling ModelForms in views
+- Creating templates for the comment form
+- Adding comments to the post detail view
+- Adding comments to the post detail template
+- Using simplified templates for form rendering
+-----------------------------------------------
+

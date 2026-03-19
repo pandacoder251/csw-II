@@ -34,14 +34,16 @@ h2 {
     float:right;
     width:10%;
     padding:10px;
-    background:#efefef; 
+    background:#757975; 
     height:100%;
 }
 
 #sidebar h2{
-    font-size:3.6rem;
-    font-weight: 300;
+    font-size:4rem;
+    font-family: 'Franklin Gothic Medium';
+    font-weight: bold;
     text-align: center;
+    color: #ffff;
 }
 p.date { 
     color:#ccc;
