@@ -89,5 +89,10 @@ A comprehensive Django blog application demonstrating core features, model manag
 - Adding comments to the post detail view
 - Adding comments to the post detail template
 - Using simplified templates for form rendering
------------------------------------------------
+
+---
+## 3. Extending Your Blog Application 
+
+### Implementing tagging with django-taggit
+
 
