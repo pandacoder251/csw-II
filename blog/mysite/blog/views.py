@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from .forms import EmailPostForm, CommentForm
 from django.views.decorators.http import require_POST
 from taggit.models import Tag
+from django.db.models import Count   # <-- you forgot this
 
 
 def post_share(request, post_id):
@@ -55,14 +56,18 @@ def post_share(request, post_id):
     )
 
 
-def post_list(request , tag_slug=None):
+def post_list(request, tag_slug=None):
     post_list = Post.published.all()
-    paginator = Paginator(post_list, 3)
-    page_number = request.GET.get('page')
     tag = None
+
+    # Filter FIRST (you were doing it after pagination... bold choice)
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         post_list = post_list.filter(tags__in=[tag])
+
+    paginator = Paginator(post_list, 3)
+    page_number = request.GET.get('page')
+
     try:
         posts = paginator.page(page_number)
     except PageNotAnInteger:
@@ -75,10 +80,8 @@ def post_list(request , tag_slug=None):
         'blog/post/list.html',
         {
             'posts': posts,
-            'page_obj': posts
-            'tag' : tag,
-            'similar_posts': similar_posts,
-            'comments': comments,
+            'page_obj': posts,
+            'tag': tag,
         }
     )
 
@@ -95,12 +98,15 @@ def post_detail(request, year, month, day, slug):
 
     comments = post.comments.filter(active=True)
     form = CommentForm()
+
     post_tags_ids = post.tags.values_list('id', flat=True)
+
     similar_posts = Post.published.filter(
-    tags__in=post_tags_ids
+        tags__in=post_tags_ids
     ).exclude(id=post.id)
+
     similar_posts = similar_posts.annotate(
-    same_tags=Count('tags')
+        same_tags=Count('tags')
     ).order_by('-same_tags', '-publish')[:4]
 
     return render(
