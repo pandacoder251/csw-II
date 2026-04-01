@@ -1,19 +1,47 @@
+{% load blog_tags %}
 {% load static %}
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>{% block title %}{% endblock %}</title>
-  <link href="{% static 'css/blog.css' %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{% static 'css/blog.css' %}" rel="stylesheet">
 </head>
 <body>
-  <div id="content">{% block content %}{% endblock %}</div>
-  <div id="sidebar">
-    <h2>W</h2>
-    <h2>E</h2>
-    <h2>L</h2>
-    <h2>C</h2>
-    <h2>O</h2>
-    <h2>M</h2>
-    <h2>E</h2>
-  </div>
+
+    <main id="content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <aside id="sidebar">
+        {% block sidebar %}
+        <section>
+            <p>
+                This is my blog.  
+                I've written {% total_posts %} posts so far.
+            </p>
+        </section>
+
+        <section>
+            <h3>Latest posts</h3>
+            {% show_latest_posts 3 %}
+        </section>
+
+        <section>
+            <h3>Most commented posts</h3>
+            {% get_most_commented_posts as most_commented_posts %}
+            <ul>
+                {% for post in most_commented_posts %}
+                <li>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endblock %}
+    </aside>
+
+   
 </body>
 </html>

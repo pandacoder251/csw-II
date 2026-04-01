@@ -34,7 +34,7 @@ h2 {
     float:right;
     width:10%;
     padding:10px;
-    background:#757975; 
+   background: #fbf9fa;
     height:100%;
 }
 
@@ -67,7 +67,7 @@ p.date {
 label { 
     float:left;
     clear:both;
-    color:#333;
+    color:#33333390;
     margin-bottom:4px; 
 }
 input, textarea { 
