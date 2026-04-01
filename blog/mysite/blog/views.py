@@ -5,7 +5,7 @@ from django.core.mail import send_mail
 from .forms import EmailPostForm, CommentForm
 from django.views.decorators.http import require_POST
 from taggit.models import Tag
-from django.db.models import Count   # <-- you forgot this
+from django.db.models import Count  
 
 
 def post_share(request, post_id):
@@ -108,7 +108,7 @@ def post_detail(request, year, month, day, slug):
     similar_posts = similar_posts.annotate(
         same_tags=Count('tags')
     ).order_by('-same_tags', '-publish')[:4]
-
+    
     return render(
         request,
         'blog/post/detail.html',
