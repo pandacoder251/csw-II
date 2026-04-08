@@ -93,6 +93,20 @@ A comprehensive Django blog application demonstrating core features, model manag
 ---
 ## 3. Extending Your Blog Application 
 
-### Implementing tagging with django-taggit
+### Creating custom template tags and filters
+- Implementing custom template tags
+- Creating a simple template tag
+- Creating an inclusion template tag
+- Creating a template tag that returns a QuerySet
+- Implementing custom template filters
+- Creating a template filter to support Markdown syntax
+### Adding a sitemap to the site
+### Creating feeds for blog posts
+### Adding full-text search to the blog
+- Installing Docker
+- Installing PostgreSQL
+- Dumping the existing data
+- Switching the database in the project
+
 
 

@@ -2,11 +2,13 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     <link href="{% static 'css/blog.css' %}" rel="stylesheet">
 </head>
+
 <body>
 
     <main id="content">
@@ -18,8 +20,13 @@
         {% block sidebar %}
         <section>
             <p>
-  
+
                 I've written {% total_posts %} posts so far.
+            </p>
+            <p>
+                <a href="{% url " blog:post_feed" %}">
+                    Subscribe to my RSS feed
+                </a>
             </p>
         </section>
 
@@ -42,6 +49,7 @@
         {% endblock %}
     </aside>
 
-   
+
 </body>
+
 </html>
