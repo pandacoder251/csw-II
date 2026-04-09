@@ -107,6 +107,11 @@ A comprehensive Django blog application demonstrating core features, model manag
 - Installing PostgreSQL
 - Dumping the existing data
 - Switching the database in the project
-
-
+- Loading the data into the new database
+- Simple search lookups
+- Searching against multiple fields
+- Stemming and ranking results
+- Stemming and removing stop words in different languages
+- Weighting queries
+- Searching with trigram similarity
 
