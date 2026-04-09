@@ -115,3 +115,4 @@ A comprehensive Django blog application demonstrating core features, model manag
 - Weighting queries
 - Searching with trigram similarity
 
+---
