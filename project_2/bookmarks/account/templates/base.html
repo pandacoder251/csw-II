@@ -1,19 +1,136 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>{% block title %}{% endblock %}</title>
-        <link href="{% static 'css/base.css' %}" rel="stylesheet">
-    </head>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
+
+    #header {
+        background-color: #333;
+        color: white;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .menu {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+        gap: 20px;
+    }
+
+    .menu li {
+        display: inline;
+    }
+
+    .menu li a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .menu li.selected a {
+        color: #ffd700;
+        border-bottom: 2px solid #ffd700;
+        padding-bottom: 3px;
+    }
+
+    .user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: white;
+    }
+
+    .user form {
+        display: inline;
+        margin: 0;
+    }
+
+    button {
+        background-color: #ff4d4d;
+        border: none;
+        color: white;
+        padding: 8px 14px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background-color: #cc0000;
+    }
+
+    #content {
+        padding: 30px;
+        background: white;
+        margin: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+    }
+
+    a {
+        color: #007bff;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+</head>
 <body>
-    <div id="header">
-        <span class="logo">Bookmarks</span>
-    </div>
-    <div id="content">
-        {% block content %}
-        {% endblock %}
-    </div>
-</body>
-</html>
+
+<div id="header">
+    <span class="logo">Bookmarks</span>
+
+    {% if request.user.is_authenticated %}
+        <ul class="menu">
+            <li {% if section == "dashboard" %}class="selected"{% endif %}>
+                <a href="{% url 'dashboard' %}">My dashboard</a>
+            </li>
+
+            <li {% if section == "images" %}class="selected"{% endif %}>
+                <a href="#">Images</a>
+            </li>
+
+            <li {% if section == "people" %}class="selected"{% endif %}>
+                <a href="#">People</a>
+            </li>
+        </ul>
+    {% endif %}
+
+    <span class="user">
+        {% if request.user.is_authenticated %}
+            Hello {{ request.user.first_name|default:request.user.username }},
+
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+
+        {% else %}
+            <a href="{% url 'login' %}">Log-in</a>
+        {% endif %}
+    </span>
+</div>
+
+<div id="content">
+    {% block content %}
+    {% endblock %}
+</div>
 
 </body>
+</html>
