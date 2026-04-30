@@ -93,7 +93,9 @@ A comprehensive Django blog application demonstrating core features, model manag
 ---
 ## 3. Extending Your Blog Application 
 
-### Creating custom template tags and filters
+### Implementing custom template tags
+### Retrieving posts by similarity
+### Creating a simple template tag
 - Implementing custom template tags
 - Creating a simple template tag
 - Creating an inclusion template tag
@@ -110,9 +112,27 @@ A comprehensive Django blog application demonstrating core features, model manag
 - Loading the data into the new database
 - Simple search lookups
 - Searching against multiple fields
+- Building a search view
 - Stemming and ranking results
 - Stemming and removing stop words in different languages
 - Weighting queries
 - Searching with trigram similarity
 
+
+## 4. Building a Social Website
+
+### Creating a social website project
+- Starting the social website project
+### Using the Django authentication framework
+- Creating a login view
+### Using Django’s built-in authentication views
+- Login and logout views
+- Change password views
+- Reset password views
+### User registration and user profiles
+- User registration
+- Extending the user model
+- Installing Pillow and serving media files
+- Creating migrations for the profile model
+  - Using a custom user model
 ---
