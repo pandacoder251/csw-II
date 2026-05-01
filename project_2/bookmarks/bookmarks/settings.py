@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+
+#GOOGLE AUTHENTICATION
+GOOGLE_OAUTH2_KEY = config('1086115740790-iaie8jnbivhk9ilit7e5ismueimjkusa.apps.googleusercontent.com')
+GOOGLE_OAUTH2_SECRET = config('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')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -103,6 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = [
 'django.contrib.auth.backends.ModelBackend',
 'account.authentication.EmailAuthBackend',
+'social_core.backends.google.GoogleOAuth2',
 ] 
 
 # Internationalization
