@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     "account",
     "social_django",
     "django_extensions",
-    
+    'images.apps.ImagesConfig',
 ]
 
 MIDDLEWARE = [
@@ -164,10 +164,10 @@ LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '672924980412-46ekvi61ttm22kkqkce8ai75vselu177.apps.googleusercontent.com'
-
+LOGOUT_REDIRECT_URL = 'login'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 
 AUTHENTICATION_BACKENDS = [

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ image.title }}
+{% endblock %}
+
+{% block content %}
+
+  <h1>{{ image.title }}</h1>
+
+  <!-- Image display -->
+  {% if image.image %}
+    <img src="{{ image.image.url }}"
+         alt="{{ image.title }}"
+         width="600">
+  {% else %}
+    <p>No image available.</p>
+  {% endif %}
+
+  <!-- Description -->
+  {% if image.description %}
+    <p>{{ image.description }}</p>
+  {% endif %}
+
+  <!-- Meta info -->
+  <p>
+    Uploaded by: {{ image.user }}<br>
+    Created at: {{ image.created }}
+  </p>
+
+  <!-- Like info (if you added ManyToMany) -->
+  <p>
+    Likes: {{ image.users_like.count }}
+  </p>
+
+  <!-- Like button (optional placeholder) -->
+  <form action="#" method="post">
+    {% csrf_token %}
+    <button type="submit">Like</button>
+  </form>
+
+{% endblock %}
