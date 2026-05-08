@@ -4,12 +4,6 @@
   <h1>Dashboard</h1>
   <p>Welcome to your dashboard.</p>
 
-  {% if request.user.profile.photo %}
-    <img src="{{ request.user.profile.photo.url }}" alt="Profile picture" width="150">
-  {% else %}
-    <p>No profile picture uploaded.</p>
-  {% endif %}
-
   <p><a href="{% url 'edit' %}">Edit profile</a></p>
   <p><a href="{% url 'password_change' %}">Change password</a></p>
 {% endblock %}

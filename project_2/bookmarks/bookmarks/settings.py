@@ -11,10 +11,24 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY = config('SECRET_KEY')
+
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config(
+    'SOCIAL_AUTH_GOOGLE_OAUTH2_KEY'
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config(
+    'SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET'
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -23,9 +37,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-!sprs+9i+7v-4xtk_5s$1f1fki6#p7ee6s%%g)l%%h$z32&k@9"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'lilysocial.com',
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -38,6 +56,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "account",
+    "social_django",
+    "django_extensions",
+    
 ]
 
 MIDDLEWARE = [
@@ -69,6 +90,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "bookmarks.wsgi.application"
 
+SOCIAL_AUTH_PIPELINE = [
+
+    'social_core.pipeline.social_auth.social_details',
+
+    'social_core.pipeline.social_auth.social_uid',
+
+    'social_core.pipeline.social_auth.auth_allowed',
+
+    'social_core.pipeline.social_auth.social_user',
+
+    'social_core.pipeline.user.get_username',
+
+    'social_core.pipeline.user.create_user',
+
+    'account.authentication.create_profile',
+
+    'social_core.pipeline.social_auth.associate_user',
+
+    'social_core.pipeline.social_auth.load_extra_data',
+
+    'social_core.pipeline.user.user_details',
+]
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
@@ -123,3 +166,14 @@ LOGOUT_URL = 'logout'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '672924980412-46ekvi61ttm22kkqkce8ai75vselu177.apps.googleusercontent.com'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+
+    'account.authentication.EmailAuthBackend',
+
+    'social_core.backends.google.GoogleOAuth2',
+]

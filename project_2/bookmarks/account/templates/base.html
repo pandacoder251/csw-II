@@ -1,50 +1,103 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{% block title %}{% endblock %}</title>
-  <link href="{% static 'css/base.css' %}" rel="stylesheet">
-</head>
-<body>
-  <div id="header">
-    <span class="logo">Bookmarks</span>
-    {% if request.user.is_authenticated %}
-      <ul class="menu">
-        <li {% if section == "dashboard" %}class="selected"{% endif %}>
-          <a href="{% url 'dashboard' %}">My dashboard</a>
-        </li>
-        <li><a href="#">Images</a></li>
-        <li><a href="#">People</a></li>
-      </ul>
-    {% endif %}
-    <div class="user-area">
-      {% if request.user.is_authenticated %}
-        {% if request.user.profile.photo %}
-          <img src="{{ request.user.profile.photo.url }}" alt="Profile picture" class="avatar">
-        {% endif %}
-        <span class="user-name">Hello {{ request.user.first_name|default:request.user.username }}</span>
-        <form action="{% url 'logout' %}" method="post" class="logout-form">
-          {% csrf_token %}
-          <button type="submit">Logout</button>
-        </form>
-      {% else %}
-        <a class="auth-link" href="{% url 'login' %}">Log-in</a>
-      {% endif %}
-    </div>
-    {% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-      <li class="{{ message.tags }}">
-        {{ message|safe }}
-        <a href="#" class="close">x</a>
-      </li>
-    {% endfor %}
-  </ul>
-{% endif %}
+    <title>{% block title %}{% endblock %}</title>
 
-  </div>
-  <div id="content">
-    {% block content %}{% endblock %}
-  </div>
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="header">
+
+        <span class="logo">Bookmarks</span>
+
+        {% if request.user.is_authenticated %}
+            <ul class="menu">
+
+                <li {% if section == "dashboard" %}class="selected"{% endif %}>
+                    <a href="{% url 'dashboard' %}">
+                        My dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">Images</a>
+                </li>
+
+                <li>
+                    <a href="#">People</a>
+                </li>
+
+            </ul>
+        {% endif %}
+
+        <div class="user-area">
+
+            {% if request.user.is_authenticated %}
+
+                {% if request.user.profile.photo %}
+                    <img
+                        src="{{ request.user.profile.photo.url }}"
+                        alt="Profile picture"
+                        class="avatar"
+                    >
+                {% endif %}
+
+                <span class="user-name">
+                    Hello
+                    {{ request.user.first_name|default:request.user.username }}
+                </span>
+
+                <form
+                    action="{% url 'logout' %}"
+                    method="post"
+                    class="logout-form"
+                >
+                    {% csrf_token %}
+
+                    <button type="submit">
+                        Logout
+                    </button>
+
+                </form>
+
+            {% else %}
+
+                <a class="auth-link" href="{% url 'login' %}">
+                    Log-in
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    {% if messages %}
+        <ul class="messages">
+
+            {% for message in messages %}
+                <li class="{{ message.tags }}">
+
+                    {{ message|safe }}
+
+                    <a href="#" class="close">
+                        ×
+                    </a>
+
+                </li>
+            {% endfor %}
+
+        </ul>
+    {% endif %}
+
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
 </body>
 </html>
