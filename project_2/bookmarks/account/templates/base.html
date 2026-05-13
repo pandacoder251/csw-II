@@ -37,7 +37,6 @@
 
         {% if user.is_authenticated %}
 
-            <!-- Safer avatar handling -->
             <img src="{% static 'img/default-avatar.png' %}"
                  alt="Profile picture"
                  class="avatar">
@@ -79,6 +78,15 @@
 
     {% block content %}
     {% endblock %}
+
+    <p>
+        Drag the following button to your bookmarks toolbar to bookmark images from other websites →
+
+        <a href="javascript:{% include 'images/image/bookmarklet_launcher.js' %}"
+           class="button">
+            Bookmark it
+        </a>
+    </p>
 
 </main>
 
