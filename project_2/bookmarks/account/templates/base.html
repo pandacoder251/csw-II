@@ -5,7 +5,7 @@
 <head>
     <title>{% block title %}{% endblock %}</title>
 
-    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bookmarklet.css' %}" rel="stylesheet">
 </head>
 
 <body>
@@ -98,6 +98,7 @@
         {% block content %}
         {% endblock %}
     </div>
-
+ <p>Drag the following button to your bookmarks toolbar to bookmark images from other websites → <a href="javascript:{% include "bookmarklet_launcher.js" %}" class="button">Bookmark it</a></p>
+ 
 </body>
 </html>
