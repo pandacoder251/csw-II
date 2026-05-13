@@ -2,11 +2,12 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}Bookmarks{% endblock %}</title>
 
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
 
@@ -19,11 +20,11 @@
 
     <span class="logo">Bookmarks</span>
 
-    {% if request.user.is_authenticated %}
-        <ul class="menu" role="navigation">
+    {% if user.is_authenticated %}
+        <ul class="menu">
 
             <li {% if section == "dashboard" %}class="selected"{% endif %}>
-                <a href="{% url 'dashboard' %}">My dashboard</a>
+                <a href="{% url 'dashboard' %}">My Dashboard</a>
             </li>
 
             <li><a href="#">Images</a></li>
@@ -34,16 +35,15 @@
 
     <div class="user-area">
 
-        {% if request.user.is_authenticated %}
+        {% if user.is_authenticated %}
 
-            {% if request.user.profile.photo %}
-                <img src="{{ request.user.profile.photo.url }}" alt="Profile picture" class="avatar">
-            {% else %}
-                <img src="{% static 'img/default-avatar.png' %}" alt="Default avatar" class="avatar">
-            {% endif %}
+            <!-- Safer avatar handling -->
+            <img src="{% static 'img/default-avatar.png' %}"
+                 alt="Profile picture"
+                 class="avatar">
 
             <span class="user-name">
-                Hello {{ request.user.first_name|default:request.user.username }}
+                Hello {{ user.first_name|default:user.username }}
             </span>
 
             <form action="{% url 'logout' %}" method="post" class="logout-form">
@@ -63,38 +63,50 @@
 
 {% if messages %}
     <ul class="messages">
+
         {% for message in messages %}
             <li class="{{ message.tags }}">
-                {{ message|safe }}
+                {{ message }}
+
                 <a href="#" class="close">×</a>
             </li>
         {% endfor %}
+
     </ul>
 {% endif %}
 
 <main id="content">
+
     {% block content %}
     {% endblock %}
+
 </main>
 
-<script src="//cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
 
 <script>
+
     const csrftoken = Cookies.get('csrftoken');
 
     document.addEventListener('DOMContentLoaded', () => {
 
         // Close message handler
         document.querySelectorAll('.messages .close').forEach(btn => {
+
             btn.addEventListener('click', e => {
+
                 e.preventDefault();
                 btn.parentElement.style.display = 'none';
+
             });
+
         });
 
         {% block domready %}
         {% endblock %}
+
     });
+
 </script>
 
 </body>
