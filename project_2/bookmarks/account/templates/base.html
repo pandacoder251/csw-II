@@ -1,104 +1,101 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{% block title %}{% endblock %}</title>
 
-    <link href="{% static 'css/bookmarklet.css' %}" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+
+    {% block extra_head %}{% endblock %}
 </head>
 
 <body>
 
-    <div id="header">
+<header id="header">
 
-        <span class="logo">Bookmarks</span>
+    <span class="logo">Bookmarks</span>
 
-        {% if request.user.is_authenticated %}
-            <ul class="menu">
+    {% if request.user.is_authenticated %}
+        <ul class="menu" role="navigation">
 
-                <li {% if section == "dashboard" %}class="selected"{% endif %}>
-                    <a href="{% url 'dashboard' %}">
-                        My dashboard
-                    </a>
-                </li>
+            <li {% if section == "dashboard" %}class="selected"{% endif %}>
+                <a href="{% url 'dashboard' %}">My dashboard</a>
+            </li>
 
-                <li>
-                    <a href="#">Images</a>
-                </li>
-
-                <li>
-                    <a href="#">People</a>
-                </li>
-
-            </ul>
-        {% endif %}
-
-        <div class="user-area">
-
-            {% if request.user.is_authenticated %}
-
-                {% if request.user.profile.photo %}
-                    <img
-                        src="{{ request.user.profile.photo.url }}"
-                        alt="Profile picture"
-                        class="avatar"
-                    >
-                {% endif %}
-
-                <span class="user-name">
-                    Hello
-                    {{ request.user.first_name|default:request.user.username }}
-                </span>
-
-                <form
-                    action="{% url 'logout' %}"
-                    method="post"
-                    class="logout-form"
-                >
-                    {% csrf_token %}
-
-                    <button type="submit">
-                        Logout
-                    </button>
-
-                </form>
-
-            {% else %}
-
-                <a class="auth-link" href="{% url 'login' %}">
-                    Log-in
-                </a>
-
-            {% endif %}
-
-        </div>
-
-    </div>
-
-    {% if messages %}
-        <ul class="messages">
-
-            {% for message in messages %}
-                <li class="{{ message.tags }}">
-
-                    {{ message|safe }}
-
-                    <a href="#" class="close">
-                        ×
-                    </a>
-
-                </li>
-            {% endfor %}
+            <li><a href="#">Images</a></li>
+            <li><a href="#">People</a></li>
 
         </ul>
     {% endif %}
 
-    <div id="content">
-        {% block content %}
-        {% endblock %}
+    <div class="user-area">
+
+        {% if request.user.is_authenticated %}
+
+            {% if request.user.profile.photo %}
+                <img src="{{ request.user.profile.photo.url }}" alt="Profile picture" class="avatar">
+            {% else %}
+                <img src="{% static 'img/default-avatar.png' %}" alt="Default avatar" class="avatar">
+            {% endif %}
+
+            <span class="user-name">
+                Hello {{ request.user.first_name|default:request.user.username }}
+            </span>
+
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+
+        {% else %}
+
+            <a class="auth-link" href="{% url 'login' %}">Log-in</a>
+
+        {% endif %}
+
     </div>
- <p>Drag the following button to your bookmarks toolbar to bookmark images from other websites → <a href="javascript:{% include "bookmarklet_launcher.js" %}" class="button">Bookmark it</a></p>
- 
+
+</header>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">
+                {{ message|safe }}
+                <a href="#" class="close">×</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<main id="content">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<script src="//cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+
+<script>
+    const csrftoken = Cookies.get('csrftoken');
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Close message handler
+        document.querySelectorAll('.messages .close').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault();
+                btn.parentElement.style.display = 'none';
+            });
+        });
+
+        {% block domready %}
+        {% endblock %}
+    });
+</script>
+
 </body>
 </html>

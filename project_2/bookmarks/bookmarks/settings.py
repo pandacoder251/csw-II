@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     "account",
     "social_django",
     "django_extensions",
-    'images.apps.ImagesConfig',
+    'images.apps.ImagesConfig', 'easy_thumbnails',
 ]
 
 MIDDLEWARE = [
