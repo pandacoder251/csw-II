@@ -1,60 +1,160 @@
 {% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title>{% block title %}{% endblock %}</title>
-  <link href="{% static "css/base.css" %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Bookmarks{% endblock %}</title>
+
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
 </head>
+
 <body>
-  <div id="header">
-    <span class="logo">Bookmarks</span>
-    {% if request.user.is_authenticated %}
-      <ul class="menu">
-        <li {% if section == "dashboard" %}class="selected"{% endif %}>
-          <a href="{% url "dashboard" %}">My dashboard</a>
-        </li>
-        <li {% if section == "images" %}class="selected"{% endif %}>
-          <a href="{% url "images:list" %}">Images</a>
-        </li>
-        <li {% if section == "people" %}class="selected"{% endif %}>
-          <a href="#">People</a>
-        </li>
-      </ul>
+
+    <!-- HEADER -->
+
+    <div id="header">
+
+        <!-- LOGO -->
+
+        <div class="logo">
+            <a href="{% url 'dashboard' %}">
+                Bookmarks
+            </a>
+        </div>
+
+        <!-- MENU -->
+
+        {% if request.user.is_authenticated %}
+
+        <ul class="menu">
+
+            <li {% if section == "dashboard" %}class="selected"{% endif %}>
+                <a href="{% url 'dashboard' %}">
+                    Home
+                </a>
+            </li>
+
+            <li {% if section == "images" %}class="selected"{% endif %}>
+                <a href="{% url 'images:list' %}">
+                    Inspiration
+                </a>
+            </li>
+
+            <li {% if section == "people" %}class="selected"{% endif %}>
+                <a href="#">
+                    Creators
+                </a>
+            </li>
+
+        </ul>
+
+        {% endif %}
+
+        <!-- USER SECTION -->
+
+        <div class="user">
+
+            {% if request.user.is_authenticated %}
+
+                <!-- PROFILE IMAGE -->
+
+                {% if request.user.profile and request.user.profile.photo %}
+
+                    <img src="{{ request.user.profile.photo.url }}"
+                         alt="profile"
+                         class="profile-img">
+
+                {% else %}
+
+                    <img src="{% static 'img/default.png' %}"
+                         alt="default-profile"
+                         class="profile-img">
+
+                {% endif %}
+
+                <!-- USERNAME -->
+
+                <span class="username">
+                    {{ request.user.first_name|default:request.user.username }}
+                </span>
+
+                <!-- LOGOUT -->
+
+                <form action="{% url 'logout' %}"
+                      method="post">
+
+                    {% csrf_token %}
+
+                    <button type="submit">
+                        Logout
+                    </button>
+
+                </form>
+
+            {% else %}
+
+                <a href="{% url 'login' %}" class="login-btn">
+                    Log-in
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <!-- MESSAGES -->
+
+    {% if messages %}
+
+        <ul class="messages">
+
+            {% for message in messages %}
+
+                <li class="{{ message.tags }}">
+
+                    {{ message|safe }}
+
+                    <a href="#" class="close">
+                        ×
+                    </a>
+
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
     {% endif %}
-    <span class="user">
-      {% if request.user.is_authenticated %}
-        Hello {{ request.user.first_name|default:request.user.username }},
-        <form action="{% url "logout" %}" method="post">
-          <button type="submit">Logout</button>
-          {% csrf_token %}
-        </form>
-      {% else %}
-        <a href="{% url "login" %}">Log-in</a>
-      {% endif %}
-    </span>
-  </div>
-  {% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-        <li class="{{ message.tags }}">
-          {{ message|safe }}
-          <a href="#" class="close">x</a>
-        </li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-  <div id="content">
-    {% block content %}
-    {% endblock %}
-  </div>
-  <script src="//cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
-  <script>
-    const csrftoken = Cookies.get('csrftoken');
-    document.addEventListener('DOMContentLoaded', (event) => {
-      // DOM loaded
-      {% block domready %}
-      {% endblock %}
-    })
-  </script>
+
+    <div id="content">
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+    <!-- JS -->
+
+    <script src="//cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+
+    <script>
+
+        const csrftoken = Cookies.get('csrftoken');
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            {% block domready %}
+            {% endblock %}
+
+        });
+
+    </script>
+
 </body>
+
 </html>

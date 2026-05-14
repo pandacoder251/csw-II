@@ -1,54 +1,193 @@
-#bookmarklet {
-    background:#fff;
-    border-bottom:8px solid #12c064;
-    font-family:"Helvetica Neue", helvetica, arial, sans-serif !important;
-    padding:10px; overflow:auto;
-    box-shadow:0px 0px 8px 0 #666;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+#bookmarklet{
     position:fixed;
-    width:400px;
-    min-height:200px;
-    top:10px;
-    right:10px;
-    z-index:1000000000000;
+
+    top:24px;
+    right:24px;
+
+    width:430px;
+    min-height:260px;
+
+    padding:24px;
+
+    background:rgba(255,255,255,0.82);
+
+    backdrop-filter:blur(22px);
+
+    border-radius:32px;
+
+    border:1px solid rgba(255,255,255,.5);
+
+    box-shadow:
+        0 12px 40px rgba(0,0,0,.12),
+        0 2px 12px rgba(0,0,0,.06);
+
+    z-index:999999999;
+
+    font-family:'Poppins',sans-serif !important;
+
+    overflow:hidden;
+
+    animation:popup .35s ease;
 }
 
-#bookmarklet h1 {
-    font-family:"Helvetica Neue", helvetica, arial, sans-serif;
-    font-weight:normal;
-    color:#333;
-    font-size:18px;
-    padding:4px 0 20px 0;
- }
+/* popup animation */
 
-#bookmarklet #close {
-    float:right;
-    font-size:18px;
+@keyframes popup{
+
+    from{
+        opacity:0;
+        transform:translateY(16px) scale(.96);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+/* heading */
+
+#bookmarklet h1{
+    font-size:24px;
+    font-weight:600;
+
+    color:#5e4034;
+
+    margin-bottom:24px;
+    padding-bottom:14px;
+
+    border-bottom:1px solid #ead8cf;
+}
+
+/* close button */
+
+#bookmarklet #close{
+    position:absolute;
+
+    top:18px;
+    right:18px;
+
+    width:36px;
+    height:36px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#f6e7de;
+
+    color:#8c5f4e;
+
     text-decoration:none;
-    color:#666;
-    margin-top:-6px;
+
+    font-size:18px;
+    font-weight:500;
+
+    transition:.3s ease;
 }
 
-#bookmarklet #close:hover {
-    color:#000;
+#bookmarklet #close:hover{
+    background:#d9b8a7;
+    color:white;
+
+    transform:rotate(90deg);
 }
 
-#bookmarklet .images {
-    margin-bottom:20px;
-    overflow:auto;
+/* image grid */
+
+#bookmarklet .images{
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fill,minmax(100px,1fr));
+
+    gap:16px;
 }
 
-#bookmarklet .images img {
-    border:1px solid #ccc;
-    padding:2px;
-    margin:2px;
-    opacity:0.8;
-    width:90px;
-    float:left;
-    cursor: pointer;
+/* image cards */
+
+#bookmarklet .images img{
+    width:100%;
+    height:110px;
+
+    object-fit:cover;
+
+    border-radius:20px;
+
+    border:3px solid transparent;
+
+    cursor:pointer;
+
+    opacity:.92;
+
+    transition:.35s ease;
+
+    box-shadow:0 8px 18px rgba(0,0,0,.08);
 }
 
-#bookmarklet .images img.selected,
-#bookmarklet .images img:hover {
-    border:1px solid #12c064;
+/* hover */
+
+#bookmarklet .images img:hover{
+
+    transform:
+        translateY(-4px)
+        scale(1.03);
+
     opacity:1;
+
+    border-color:#d9b8a7;
+
+    box-shadow:
+        0 14px 24px rgba(0,0,0,.14);
+}
+
+/* selected image */
+
+#bookmarklet .images img.selected{
+
+    border-color:#c97c5d;
+
+    opacity:1;
+
+    transform:scale(1.04);
+
+    box-shadow:
+        0 0 0 4px rgba(201,124,93,.18),
+        0 14px 28px rgba(0,0,0,.16);
+}
+
+/* scrollbar */
+
+#bookmarklet::-webkit-scrollbar{
+    width:8px;
+}
+
+#bookmarklet::-webkit-scrollbar-thumb{
+    background:#d9b8a7;
+    border-radius:20px;
+}
+
+#bookmarklet::-webkit-scrollbar-track{
+    background:#f8f1ec;
+}
+
+/* mobile */
+
+@media(max-width:600px){
+
+    #bookmarklet{
+        width:92%;
+        right:4%;
+        left:4%;
+
+        padding:20px;
+    }
+
+    #bookmarklet .images{
+        grid-template-columns:repeat(2,1fr);
+    }
 }
